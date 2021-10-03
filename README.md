@@ -18,4 +18,4 @@ cp env.template .env
 
 ## Usage
 
-1. Visit `http://localhost:8000` (or whatever `PORT` you specified in `.env`)
+1. Visit `http://localhost:8000` (or whatever `CH_PORT` you specified in `.env`)
