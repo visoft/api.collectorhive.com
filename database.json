@@ -1,0 +1,47 @@
+{
+  "dev": {
+    "driver": "postgres",
+    "user": {
+      "ENV": "CH_DB_USER"
+    },
+    "password": {
+      "ENV": "CH_DB_PASSWORD"
+    },
+    "host": {
+      "ENV": "CH_DB_HOST"
+    },
+    "database": {
+      "ENV": "CH_DB_NAME"
+    }
+  },
+  "test": {
+    "driver": "postgres",
+    "user": {
+      "ENV": "CH_DB_USER"
+    },
+    "password": {
+      "ENV": "CH_DB_PASSWORD"
+    },
+    "host": {
+      "ENV": "CH_DB_HOST"
+    },
+    "database": {
+      "ENV": "CH_DB_NAME"
+    }
+  },
+  "prod": {
+    "driver": "postgres",
+    "user": {
+      "ENV": "CH_DB_USER"
+    },
+    "password": {
+      "ENV": "CH_DB_PASSWORD"
+    },
+    "host": {
+      "ENV": "CH_DB_HOST"
+    },
+    "database": {
+      "ENV": "CH_DB_NAME"
+    }
+  }
+}
