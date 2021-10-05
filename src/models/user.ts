@@ -19,10 +19,13 @@ class User extends Model {
   id!: string;
 
   @Column
+  name!: string;
+
+  @Column
   email!: string;
 
   @Column
-  name!: string;
+  password!: string;
 
   @Column
   provider!: string;
@@ -34,7 +37,22 @@ class User extends Model {
   createdAt!: Date;
 
   @UpdatedAt
-  updateAt!: Date;
+  updatedAt!: Date;
+
+  // @BeforeCreate
+  // static async setProvider(instance: User) {
+  //   if (instance.provider === 'local') {
+  //     const token = jwt.sign({ id: instance.email }, jwtSecret.secret);
+  //     instance.providerId = token; // eslint-disable-line no-param-reassign
+  //   }
+  // }
+
+  // @BeforeCreate
+  // @BeforeUpdate
+  // static async updatePassword(instance: User) {
+  //   const hashedPassword = await bcrypt.hash(instance.password, 12);
+  //   instance.password = hashedPassword; // eslint-disable-line no-param-reassign
+  // }
 }
 
 export default User;

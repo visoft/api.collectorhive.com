@@ -24,5 +24,5 @@ cp env.template .env
 
 You need to have Postgres installed and running.
 
-1. `npx db-migrate db:create collectorhive_api_development` (or whatever `CH_DB_NAME` you specified in `.env`)
-2. `npx db-migrate up`
+1. `npx sequelize db:create`
+2. `npx sequelize db:migrate`
