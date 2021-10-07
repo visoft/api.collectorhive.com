@@ -93,7 +93,6 @@ dist
 # public
 
 # vuepress build output
-.vuepress/dist
 
 # Serverless directories
 .serverless/
@@ -119,3 +118,4 @@ dist
 © 2021 GitHub, Inc.
 Terms
 Privacy
+dist/

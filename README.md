@@ -26,3 +26,4 @@ You need to have Postgres installed and running.
 
 1. `npx sequelize db:create`
 2. `npx sequelize db:migrate`
+3. Optionally run seeders `npm run seed`
