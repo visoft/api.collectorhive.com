@@ -1,13 +1,18 @@
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
+import * as dotenv from 'dotenv';
+import User from './models/User';
 
-export const sequelize: Sequelize = new Sequelize({
-  define: {
-    freezeTableName: true,
-  },
-  database: process.env.CH_DB_NAME,
-  dialect: 'postgres',
-  username: process.env.CH_DB_USER,
-  password: process.env.CH_DB_PASSWORD,
-  host: process.env.CH_DB_HOST,
-  models: [__dirname + '/models'], // or [Player, Team],
-});
+dotenv.config();
+const sequelize: Sequelize = new Sequelize(
+  process.env.CH_DB_NAME as string,
+  process.env.CH_DB_USER as string,
+  process.env.CH_DB_PASSWORD,
+  {
+    dialect: 'postgres',
+    host: process.env.CH_DB_HOST as string,
+    port: Number(process.env.CH_DB_PORT),
+    models: [User],
+  } as SequelizeOptions,
+);
+
+export default sequelize;

@@ -1,45 +1,53 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
-      id: {
-        type: Sequelize.UUID,
-        primaryKey: true,
-        defaultValue: Sequelize.UUIDV4,
+    await queryInterface.createTable(
+      'Users',
+      {
+        id: {
+          type: Sequelize.UUID,
+          primaryKey: true,
+          defaultValue: Sequelize.UUIDV4,
+        },
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        email: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        password: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        provider: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        providerId: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        createdAt: {
+          type: Sequelize.DATE,
+          allowNull: false,
+        },
+        updatedAt: {
+          type: Sequelize.DATE,
+          allowNull: false,
+        },
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      {
+        uniqueKeys: {
+          uniqueEmail: {
+            fields: ['email'],
+          },
+        },
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      provider: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      providerId: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-    });
+    );
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     await queryInterface.dropTable('Users');
   },
 };
