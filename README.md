@@ -19,3 +19,10 @@ cp env.template .env
 ## Usage
 
 1. Visit `http://localhost:8000` (or whatever `CH_PORT` you specified in `.env`)
+
+## Database
+
+You need to have Postgres installed and running.
+
+1. `npx sequelize db:create`
+2. `npx sequelize db:migrate`
