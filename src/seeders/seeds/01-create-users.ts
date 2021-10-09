@@ -1,8 +1,6 @@
 import User from '../../models/User';
-import sequelize from '../../sequelize';
 
 export default (async () => {
-  await sequelize.sync();
   try {
     await User.create({
       name: 'Damien White',
