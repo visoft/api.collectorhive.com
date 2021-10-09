@@ -14,6 +14,7 @@ import {
   BeforeUpdate,
   TableOptions,
   Index,
+  IsEmail,
 } from 'sequelize-typescript';
 
 import jwtSecret from '../config/jwt-config';
@@ -29,16 +30,21 @@ class User extends Model {
   @Column(DataType.UUID)
   id!: string;
 
+  @AllowNull(false)
   @Column
   name!: string;
 
-  @Column
   @Index
+  @IsEmail
+  @AllowNull(false)
+  @Column
   email!: string;
 
+  @AllowNull(false)
   @Column
   password!: string;
 
+  @AllowNull(false)
   @Column
   provider!: string;
 

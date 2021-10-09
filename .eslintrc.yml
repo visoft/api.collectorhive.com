@@ -19,5 +19,17 @@ rules:
       jsx: never
       ts: never
       tsx: never
+
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies:
+        - specs/**
+      optionalDependencies: false
+      peerDependencies: false
+overrides:
+  - files:
+      - 'specs/**/*.ts'
+    rules:
+      no-unused-expressions: 'off'
 settings:
   'import/resolver': { node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] } }

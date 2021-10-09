@@ -1,5 +1,5 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
-import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv-flow';
 import User from './models/User';
 
 dotenv.config();
@@ -14,5 +14,9 @@ const sequelize: Sequelize = new Sequelize(
     models: [User],
   } as SequelizeOptions,
 );
+
+if (process.env.NODE_ENV === 'test') {
+  sequelize.options.logging = false;
+}
 
 export default sequelize;

@@ -27,3 +27,8 @@ You need to have Postgres installed and running.
 1. `npx sequelize db:create`
 2. `npx sequelize db:migrate`
 3. Optionally run seeders `npm run seed`
+
+## Testing
+
+1. Create the test database `NODE_ENV=test npx sequelize db:create`
+2. Run the tests `npm test` or `npm run test:watch` if you want to watch for changes while developing

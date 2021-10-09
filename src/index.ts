@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv-flow';
 import app from './app';
 
 dotenv.config();
