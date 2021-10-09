@@ -48,14 +48,16 @@ jobs:
       - run: npm run build --if-present
       - name: Create DB
         run: NODE_ENV=test npx sequelize db:create
-        env: CH_DB_USER=postgres
-          CH_DB_PASSWORD=postgres
-          CH_DB_HOST=postgres
-          CH_DB_PORT=5432
+        env:
+          CH_DB_USER: postgres
+          CH_DB_PASSWORD: postgres
+          CH_DB_HOST: postgres
+          CH_DB_PORT: 5432
       - name: Run tests
         run: npm test
-        env: CH_DB_USER=postgres
-          CH_DB_NAME=collectorhive_api_test
-          CH_DB_PASSWORD=postgres
-          CH_DB_HOST=postgres
-          CH_DB_PORT=5432
+        env:
+          CH_DB_USER: postgres
+          CH_DB_NAME: collectorhive_api_test
+          CH_DB_PASSWORD: postgres
+          CH_DB_HOST: postgres
+          CH_DB_PORT: 5432
