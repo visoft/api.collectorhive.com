@@ -16,10 +16,7 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: collectorhive_api_test
-          POSTGRES_PASSWORD:
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: null
         ports:
           - 5432:5432
         options: >-
