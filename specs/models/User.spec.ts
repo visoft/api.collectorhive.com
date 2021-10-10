@@ -5,7 +5,6 @@ import sequelize from '../../src/sequelize';
 
 describe('User Model', () => {
   beforeEach(async () => {
-    // runs once before the first test in this block
     await sequelize.sync({ force: true });
   });
 
