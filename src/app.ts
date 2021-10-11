@@ -1,7 +1,9 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import * as dotenv from 'dotenv';
+import * as dotenv from 'dotenv-flow';
+import routes from './routes';
+import sequelize from './sequelize';
 
 dotenv.config();
 
@@ -11,15 +13,11 @@ if (!process.env.CH_PORT) {
 
 const app: Application = express();
 
+sequelize.sync();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.get('/', async (req: Request, res: Response): Promise<Response> => {
-  return res.status(200).send({
-    message: 'Hello World!',
-  });
-});
+app.use('', routes);
 
 export default app;
