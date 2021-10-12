@@ -7,10 +7,6 @@ import sequelize from './sequelize';
 
 dotenv.config();
 
-if (!process.env.CH_PORT) {
-  process.exit(1);
-}
-
 const app: Application = express();
 
 sequelize.sync();
