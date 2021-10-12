@@ -9,7 +9,6 @@ dotenv.config();
 
 const app: Application = express();
 
-sequelize.sync();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());

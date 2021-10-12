@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import * as dotenv from 'dotenv-flow';
+import sequelize from './sequelize';
 import app from './app';
 
 dotenv.config();
@@ -7,6 +8,10 @@ dotenv.config();
 const PORT: number = parseInt(process.env.CH_PORT as string, 10);
 
 try {
+  (async () => {
+    await sequelize.sync();
+  })();
+
   app.listen(PORT, (): void => {
     console.log('\x1b[32m', `_____       _ _           _             _   _ _           `);
     console.log(`/  __ \\     | | |         | |           | | | (_)          `);
