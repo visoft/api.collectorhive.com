@@ -3,7 +3,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import * as dotenv from 'dotenv-flow';
 import routes from './routes';
-import sequelize from './sequelize';
 
 dotenv.config();
 
