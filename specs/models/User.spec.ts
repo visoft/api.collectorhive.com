@@ -1,11 +1,10 @@
 import { expect } from 'chai';
-import { describe, it, before } from 'mocha';
+import { describe, it, beforeEach } from 'mocha';
 import User from '../../src/models/User';
 import sequelize from '../../src/sequelize';
 
 describe('User Model', () => {
-  before(async () => {
-    // runs once before the first test in this block
+  beforeEach(async () => {
     await sequelize.sync({ force: true });
   });
 

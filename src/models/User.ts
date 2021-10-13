@@ -13,8 +13,8 @@ import {
   BeforeCreate,
   BeforeUpdate,
   TableOptions,
-  Index,
   IsEmail,
+  Unique,
 } from 'sequelize-typescript';
 
 import jwtSecret from '../config/jwt-config';
@@ -34,7 +34,7 @@ class User extends Model {
   @Column
   name!: string;
 
-  @Index
+  @Unique
   @IsEmail
   @AllowNull(false)
   @Column
