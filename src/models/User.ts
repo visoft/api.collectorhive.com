@@ -69,8 +69,11 @@ class User extends Model {
   @BeforeCreate
   @BeforeUpdate
   static async updatePassword(instance: User): Promise<User> {
-    const hashedPassword = await bcrypt.hash(instance.password, 12);
-    instance.password = hashedPassword; // eslint-disable-line no-param-reassign
+    if (instance.changed('password')) {
+      const hashedPassword = await bcrypt.hash(instance.password, 12);
+      instance.password = hashedPassword; // eslint-disable-line no-param-reassign
+    }
+
     return instance;
   }
 }

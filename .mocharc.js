@@ -5,5 +5,4 @@ module.exports = {
   extension: ['ts'],
   watchExtensions: ['ts'],
   spec: ['specs/**/*.spec.ts'],
-  bail: true,
 };
