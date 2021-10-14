@@ -10,6 +10,8 @@ const restfulRoutes = (routePrefix: string, idParam: string, controller: BaseCon
   router.get(`/${routePrefix}/:${idParam}`, controller.show);
 };
 
+router.post('/login', express.urlencoded({ extended: false }), UsersController.login);
+
 restfulRoutes('users', 'userId', new UsersController());
 
 export default router;

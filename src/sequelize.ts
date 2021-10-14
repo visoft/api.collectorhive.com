@@ -2,7 +2,7 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import * as dotenv from 'dotenv-flow';
 import User from './models/User';
 
-dotenv.config();
+dotenv.config({ silent: true });
 const sequelize: Sequelize = new Sequelize(
   process.env.CH_DB_NAME as string,
   process.env.CH_DB_USER as string,
