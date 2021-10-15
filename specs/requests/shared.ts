@@ -9,34 +9,35 @@ import factory from '../utilities/factories';
 const request = supertest(app);
 
 const shouldBehaveLikeAnAPI = function () {
-  before(async function () {
-    if (!this.user) {
-      const u = (await factory.create('User')) as User;
-      this.userId = u.id;
-      this.token = u.providerId;
-    } else {
-      this.token = this.user.providerId;
-    }
-  });
+  let admin: User | null;
 
-  describe('index', function () {
-    describe('does exist', function () {
-      it('should return a 200 status', function (done) {
-        request.get(this.path).expect(200, done);
-      });
+  describe('API', function () {
+    before(async function () {
+      admin = await factory.create<User>('User');
     });
-  });
 
-  describe('show', function () {
-    describe('does not exist', function () {
-      it('should return a 404 error', function (done) {
-        request.get(`${this.path}/fakeuuid`).expect(404, done);
+    describe('index', function () {
+      describe('does exist', function () {
+        it('should return a 200 status', function (done) {
+          request.get(this.path).set('Authorization', `Bearer ${admin?.providerId}`).expect(200, done);
+        });
       });
     });
 
-    describe('does exist', function () {
-      it('should return a 200 status', function (done) {
-        request.get(`${this.path}/${this.userId}`).expect(200, done);
+    describe('show', function () {
+      describe('does not exist', function () {
+        it('should return a 404 error', function (done) {
+          request.get(`${this.path}/fake`).set('Authorization', `Bearer ${admin?.providerId}`).expect(404, done);
+        });
+      });
+
+      describe('does exist', function () {
+        it('should return a 200 status', function (done) {
+          request
+            .get(`${this.path}/${this.updateId}`)
+            .set('Authorization', `Bearer ${admin?.providerId}`)
+            .expect(200, done);
+        });
       });
     });
   });

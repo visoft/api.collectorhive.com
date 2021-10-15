@@ -1,9 +1,11 @@
 import { Application } from 'express';
 import passport from 'passport';
 
-import localStrategy from './strategy/local.strategy';
+import localStrategy from './strategies/local.strategy';
+import jwtStrategy from './strategies/jwt.strategy';
 
 localStrategy();
+jwtStrategy();
 
 const passportConfig = (app: Application) => {
   app.use(passport.initialize());

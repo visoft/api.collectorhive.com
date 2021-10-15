@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
-import jwt from 'jsonwebtoken';
 
-import jwtSecret from '../config/jwt-config';
+import tokenUtil from '../utils/token';
 import User from '../models/User';
 import BaseController from './base.controller';
 
@@ -10,6 +9,22 @@ export default class UsersController extends BaseController<User> {
   constructor() {
     const attributes = ['email', 'password', 'name', 'providerId', 'provider', 'createdAt', 'updatedAt'];
     super(User, 'users', attributes, 'userId');
+  }
+
+  static async me(req: Request, res: Response) {
+    const { email } = req?.user as User;
+
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ status: 'error', error: 'User not found' });
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        user: { id: user.id, name: user.name, email: user.email, createdAt: user.createdAt },
+      },
+    });
   }
 
   static async login(req: Request, res: Response, next: NextFunction) {
@@ -30,16 +45,16 @@ export default class UsersController extends BaseController<User> {
           return next(err);
         }
 
-        const token = jwt.sign({ id: user.email }, jwtSecret.secret);
+        const token = tokenUtil(user.email);
         user.providerId = token; // eslint-disable-line no-param-reassign
         await user.save();
 
         return res.status(200).json({
           status: 'success',
           data: {
-            user: { id: user.id, name: user.name, email: user.email, createdAt: user.createdAt },
-            access_token: token,
-            token_type: 'jwt',
+            user: { id: user.id, name: user.name, email: user.email },
+            bearerToken: token,
+            tokenType: 'JWT',
           },
         });
       });
