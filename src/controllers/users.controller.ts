@@ -30,19 +30,16 @@ export default class UsersController extends BaseController<User> {
   static async login(req: Request, res: Response, next: NextFunction) {
     passport.authenticate('local', { session: false }, (error: any, user: User, info: any) => {
       if (error) {
-        res.status(500).json({ status: 'error', error });
-        return next(error);
+        return res.status(500).json({ status: 'error', error });
       }
 
       if (info !== undefined) {
-        res.status(401).json({ status: 'error', error: info.message });
-        return next(info);
+        return res.status(401).json({ status: 'error', error: info.message });
       }
 
       return req.logIn(user, { session: false }, async (err) => {
         if (err) {
-          res.status(500).json({ status: 'error', error: 'Unspecified Error' });
-          return next(err);
+          return res.status(500).json({ status: 'error', error: 'Unspecified Error' });
         }
 
         const token = tokenUtil(user.email);
