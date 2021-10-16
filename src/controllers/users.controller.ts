@@ -7,8 +7,10 @@ import BaseController from './base.controller';
 
 export default class UsersController extends BaseController<User> {
   constructor() {
-    const attributes = ['email', 'password', 'name', 'providerId', 'provider', 'createdAt', 'updatedAt'];
-    super(User, 'users', attributes, 'userId');
+    const publicAttributes = ['id', 'name', 'email', 'createdAt'];
+    const attributes = ['id', 'email', 'password', 'name', 'providerId', 'provider', 'createdAt', 'updatedAt'];
+    const actions = ['show'];
+    super(User, 'users', attributes, 'userId', { attributes: publicAttributes }, actions);
   }
 
   static async me(req: Request, res: Response) {

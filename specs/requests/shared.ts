@@ -6,16 +6,17 @@ import app from '../../src/app';
 import User from '../../src/models/User';
 import factory from '../utilities/factories';
 
-const request = supertest(app);
+export const request = supertest(app);
+const defaultTestActions = ['index', 'show'];
 
-const shouldBehaveLikeAnAPI = function () {
+const shouldBehaveLikeAnAPI = function (actionsToTest = defaultTestActions) {
   let admin: User | null;
 
-  describe('API', function () {
-    before(async function () {
-      admin = await factory.create<User>('User');
-    });
+  before(async function () {
+    admin = await factory.create<User>('User');
+  });
 
+  if (actionsToTest.includes('index')) {
     describe('index', function () {
       describe('does exist', function () {
         it('should return a 200 status', function (done) {
@@ -23,11 +24,13 @@ const shouldBehaveLikeAnAPI = function () {
         });
       });
     });
+  }
 
+  if (actionsToTest.includes('show')) {
     describe('show', function () {
       describe('does not exist', function () {
         it('should return a 404 error', function (done) {
-          request.get(`${this.path}/fake`).set('Authorization', `Bearer ${admin?.providerId}`).expect(404, done);
+          request.get(`${this.path}/1234567`).set('Authorization', `Bearer ${admin?.providerId}`).expect(404, done);
         });
       });
 
@@ -40,7 +43,7 @@ const shouldBehaveLikeAnAPI = function () {
         });
       });
     });
-  });
+  }
 };
 
 export default shouldBehaveLikeAnAPI;
