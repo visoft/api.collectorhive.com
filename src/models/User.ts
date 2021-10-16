@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import {
   Table,
   Column,
@@ -17,7 +16,7 @@ import {
   Unique,
 } from 'sequelize-typescript';
 
-import jwtSecret from '../config/jwt-config';
+import tokenUtil from '../utils/token';
 
 @Table({
   modelName: 'User',
@@ -58,9 +57,9 @@ class User extends Model {
   updatedAt!: Date;
 
   @BeforeCreate
-  static setProvider(instance: User): User {
+  static setProviderId(instance: User): User {
     if (instance.provider === 'local') {
-      const token = jwt.sign({ id: instance.email }, jwtSecret.secret);
+      const token = tokenUtil(instance.email);
       instance.providerId = token; // eslint-disable-line no-param-reassign
     }
     return instance;

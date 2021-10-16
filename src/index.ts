@@ -1,6 +1,11 @@
 /* eslint-disable no-console */
+
 import sequelize from './sequelize';
 import app from './app';
+import environment from './utils/environment';
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+const expressListRoutes = require('express-list-routes');
 
 const PORT: number = parseInt(process.env.CH_PORT as string, 10);
 
@@ -19,6 +24,11 @@ const PORT: number = parseInt(process.env.CH_PORT as string, 10);
       console.log(`                                                           `);
       console.log(`                                                           `, '\x1b[0m');
       console.log(`Connected successfully on port ${PORT}`);
+
+      if (environment === 'development') {
+        console.log('Routes');
+        expressListRoutes(app);
+      }
     });
   } catch (error: any) {
     console.error(`Error occurred: ${error.message}`);

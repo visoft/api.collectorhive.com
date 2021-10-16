@@ -42,7 +42,7 @@ describe('[Request] Login', async () => {
           .expect(200)
           .end((err, res) => {
             if (err) return done(err);
-            expect(res.body.data.access_token).to.not.be.undefined;
+            expect(res.body.data.bearerToken).to.not.be.undefined;
             return done();
           });
       });

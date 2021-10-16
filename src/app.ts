@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import * as dotenv from 'dotenv-flow';
 
+import errorMiddleware from './middlewares/error.middleware';
 import routes from './routes';
 import passportConfig from './config/passport';
 
@@ -17,5 +18,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('', routes);
+app.use(errorMiddleware);
 
 export default app;
