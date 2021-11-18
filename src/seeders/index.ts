@@ -14,6 +14,6 @@ new Promise((resolve, reject) => {
   });
 }).then((modules: any) => {
   modules.forEach((module: any) => {
-    module.default();
+    module
   });
 });

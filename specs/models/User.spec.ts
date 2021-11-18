@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
 import User from '../../src/models/User';
 import sequelize from '../../src/sequelize';
+import { Role } from '../../src/utils/roles';
 
 describe('User Model', () => {
   beforeEach(async () => {
@@ -103,7 +104,7 @@ describe('User Model', () => {
       }
     });
 
-    it('should be set an encrypted password', async () => {
+    it('should set an encrypted password', async () => {
       const user = new User();
       user.name = 'John Doe';
       user.email = 'john@doe.com';
@@ -118,7 +119,7 @@ describe('User Model', () => {
       }
     });
 
-    it('should be set a providerId for local', async () => {
+    it('should set a providerId for local', async () => {
       const user = new User();
       user.name = 'John Doe';
       user.email = 'john@doe.com';
@@ -127,6 +128,21 @@ describe('User Model', () => {
       try {
         const savedUser = await user.save();
         expect(savedUser.provider).to.not.be.undefined;
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      }
+    });
+
+    it('should be set a role of user', async () => {
+      const user = new User();
+      user.name = 'John Doe';
+      user.email = 'john@doe.com';
+      user.password = '123456';
+      user.provider = 'local';
+      try {
+        const savedUser = await user.save();
+        expect(savedUser.role).to.equal(Role.User);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);

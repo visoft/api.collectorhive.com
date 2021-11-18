@@ -10,6 +10,9 @@
     "test": "NODE_ENV=test mocha",
     "test:watch": "NODE_ENV=test mocha --watch"
   },
+  "engines": {
+    "node": ">=16.13.0"
+  },
   "keywords": [],
   "author": "@visoft",
   "license": "ISC",
@@ -55,6 +58,7 @@
     "express": "^4.17.1",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
+    "npm": "^8.1.0",
     "passport": "^0.5.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

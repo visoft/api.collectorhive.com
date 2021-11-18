@@ -1,4 +1,5 @@
 import User from '../../models/User';
+import { Role } from '../../utils/roles';
 
 export default (async () => {
   try {
@@ -7,6 +8,7 @@ export default (async () => {
       email: 'damien.white@visoftinc.com',
       password: 'password',
       provider: 'local',
+      role: Role.Admin,
     });
   } catch {
     // eslint-disable-next-line no-console
@@ -18,6 +20,7 @@ export default (async () => {
       email: 'mark.w.dickson@gmail.com',
       password: 'password',
       provider: 'local',
+      role: Role.Admin,
     });
   } catch {
     // eslint-disable-next-line no-console

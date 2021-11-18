@@ -17,32 +17,27 @@ export default abstract class BaseController<T extends Model<T>> {
 
   queryOptions: any;
 
-  actions: string[];
-
   constructor(
     model: ModelType<T>,
     collectionName: string,
     attributesArray: string[],
     paramName: string,
     queryOptions: any = {},
-    actions: string[] = ['index', 'show'],
   ) {
     this.model = model;
     this.collectionName = collectionName;
     this.attributesArray = attributesArray;
     this.paramName = paramName;
     this.queryOptions = queryOptions;
-    this.actions = actions;
+
+    this.index = this.index.bind(this);
+    this.show = this.show.bind(this);
+
+    this.getModel = this.getModel.bind(this);
+    this.missingModel = this.missingModel.bind(this);
   }
 
-  index = async (req: Request, res: Response) => {
-    if (!this.actions.includes('index')) {
-      return res.status(403).json({
-        status: 'error',
-        error: 'Forbidden',
-      });
-    }
-
+  async index(req: Request, res: Response) {
     const items = await this.model.findAll(this.queryOptions);
 
     return res.status(200).json({
@@ -51,9 +46,9 @@ export default abstract class BaseController<T extends Model<T>> {
         [this.collectionName]: items,
       },
     });
-  };
+  }
 
-  show = async (req: Request, res: Response) => {
+  async show(req: Request, res: Response) {
     try {
       const item = await this.getModel(req.params[this.paramName]);
       if (!item) return this.missingModel(res);
@@ -67,16 +62,17 @@ export default abstract class BaseController<T extends Model<T>> {
     } catch (err) {
       return this.missingModel(res);
     }
-  };
+  }
 
-  getModel = async (id: string) => {
+  async getModel(id: string) {
     const item = await this.model.findByPk(id, this.queryOptions);
     return item;
-  };
+  }
 
-  missingModel = (res: Response) =>
-    res.status(404).json({
+  missingModel(res: Response) {
+    return res.status(404).json({
       status: 'error',
       error: 'Not found',
     });
+  }
 }
