@@ -4,16 +4,33 @@ import passport from 'passport';
 import tokenUtil from '../utils/token';
 import User from '../models/User';
 import BaseController from './base.controller';
+import { Role } from '../utils/roles';
 
 export default class UsersController extends BaseController<User> {
   constructor() {
-    const publicAttributes = ['id', 'name', 'email', 'createdAt'];
-    const attributes = ['id', 'email', 'password', 'name', 'providerId', 'provider', 'createdAt', 'updatedAt'];
-    const actions = ['show'];
-    super(User, 'users', attributes, 'userId', { attributes: publicAttributes }, actions);
+    super(
+      User, 
+      'users', 
+      ['id', 'email', 'password', 'name', 'providerId', 'provider', 'createdAt', 'updatedAt'], 
+      'userId',
+      { attributes: ['id', 'name', 'email', 'createdAt'] }
+    );
   }
 
-  static async me(req: Request, res: Response) {
+   async index(req: Request, res: Response) {
+    const user = req.user as User;
+  
+    if(user.role === Role.Admin) {
+       return super.index(req, res)
+    }
+
+    return res.status(403).json({
+        status: 'error',
+        error: 'Forbidden',
+      });
+  };
+
+  static me = async (req: Request, res: Response) => {
     const { email } = req?.user as User;
 
     const user = await User.findOne({ where: { email } });
@@ -29,7 +46,7 @@ export default class UsersController extends BaseController<User> {
     });
   }
 
-  static async login(req: Request, res: Response, next: NextFunction) {
+  static login = (req: Request, res: Response, next: NextFunction) => {
     passport.authenticate('local', { session: false }, (error: any, user: User, info: any) => {
       if (error) {
         return res.status(500).json({ status: 'error', error });

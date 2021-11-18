@@ -7,6 +7,7 @@ import sequelize from '../../src/sequelize';
 import shouldBehaveLikeAnAPI, { request } from './shared';
 import User from '../../src/models/User';
 import factory from '../utilities/factories';
+import { Role } from '../../src/utils/roles';
 
 describe('[Request] Users', () => {
   let user: User | undefined;
@@ -23,6 +24,17 @@ describe('[Request] Users', () => {
   describe('index', function () {
     it('should return a 403 status', function (done) {
       request.get(this.path).set('Authorization', `Bearer ${user?.providerId}`).expect(403, done);
+    });
+
+    describe('as an admin', function () {
+      let admin: User | undefined;
+      before(async function () {
+        admin = await factory.create<User>('User', { role: Role.Admin });
+      });
+
+      it('should return a 200 status', function (done) {
+        request.get(this.path).set('Authorization', `Bearer ${admin?.providerId}`).expect(200, done);
+      });
     });
   });
 

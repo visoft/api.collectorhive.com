@@ -15,6 +15,7 @@ import {
   IsEmail,
   Unique,
 } from 'sequelize-typescript';
+import { Role } from '../utils/roles';
 
 import tokenUtil from '../utils/token';
 
@@ -49,6 +50,10 @@ class User extends Model {
 
   @Column
   providerId!: string;
+
+  @Default(Role.User)
+  @Column
+  role!: Role;
 
   @CreatedAt
   createdAt!: Date;
