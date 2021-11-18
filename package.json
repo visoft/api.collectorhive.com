@@ -11,7 +11,7 @@
     "test:watch": "NODE_ENV=test mocha --watch"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.13.0"
   },
   "keywords": [],
   "author": "@visoft",
