@@ -25,7 +25,7 @@
     "@types/glob": "^7.1.4",
     "@types/helmet": "^4.0.0",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/mocha": "^9.0.0",
+    "@types/mocha": "^9.1.0",
     "@types/node": "^17.0.10",
     "@types/passport": "^1.0.7",
     "@types/passport-jwt": "^3.0.6",
