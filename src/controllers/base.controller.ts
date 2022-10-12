@@ -34,7 +34,6 @@ export default abstract class BaseController<T extends Model<T>> {
     this.show = this.show.bind(this);
 
     this.getModel = this.getModel.bind(this);
-    this.missingModel = this.missingModel.bind(this);
   }
 
   async index(req: Request, res: Response) {
@@ -51,7 +50,7 @@ export default abstract class BaseController<T extends Model<T>> {
   async show(req: Request, res: Response) {
     try {
       const item = await this.getModel(req.params[this.paramName]);
-      if (!item) return this.missingModel(res);
+      if (!item) return BaseController.missingModel(res);
 
       return res.status(200).json({
         status: 'success',
@@ -60,7 +59,7 @@ export default abstract class BaseController<T extends Model<T>> {
         },
       });
     } catch (err) {
-      return this.missingModel(res);
+      return BaseController.missingModel(res);
     }
   }
 
@@ -69,7 +68,7 @@ export default abstract class BaseController<T extends Model<T>> {
     return item;
   }
 
-  missingModel(res: Response) {
+  static missingModel(res: Response) {
     return res.status(404).json({
       status: 'error',
       error: 'Not found',

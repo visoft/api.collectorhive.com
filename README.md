@@ -6,13 +6,13 @@ CollectorHive is a RESTful API for managing CollectorHive data.
 
 ## Development
 
-1. Copy `env.template` to `.env`
+1. Copy `env.template` to `.env.local`
 
 ```
-cp env.template .env
+cp env.template .env.local
 ```
 
-2. Customize data in `.env`
+2. Customize data in `.env.local`
 3. Run `npm install`
 4. Run `npm run dev`
 
