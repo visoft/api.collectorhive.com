@@ -118,3 +118,8 @@ dist
 Terms
 Privacy
 dist/
+
+# Env
+.env.local
+.env.*.local
+
