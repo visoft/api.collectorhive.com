@@ -44,6 +44,19 @@ const shouldBehaveLikeAnAPI = function (actionsToTest = defaultTestActions) {
       });
     });
   }
+
+  if (actionsToTest.includes('create')) {
+    describe('create', function () {
+      it('should return a 201 status', function (done) {
+        request
+          .post(this.path)
+          .send(this.createData)
+          .set('Content-Type', 'application/json')
+          .set('Authorization', `Bearer ${admin?.providerId}`)
+          .expect(201, done);
+      });
+    });
+  }
 };
 
 export default shouldBehaveLikeAnAPI;
