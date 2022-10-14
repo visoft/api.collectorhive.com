@@ -8,6 +8,8 @@ import UsersController from './controllers/users.controller';
 const router = express.Router();
 
 const restfulRoutes = (routePrefix: string, idParam: string, controller: BaseController<Model>) => {
+  const cons = controller.constructor as typeof BaseController;
+
   router.get(
     `/${routePrefix}`,
     passport.authenticate('jwt', { session: false, failWithError: true }),
@@ -18,11 +20,19 @@ const restfulRoutes = (routePrefix: string, idParam: string, controller: BaseCon
     passport.authenticate('jwt', { session: false, failWithError: true }),
     controller.show,
   );
+  router.post(
+    `/${routePrefix}`,
+    [passport.authenticate('jwt', { session: false, failWithError: true }), cons.validateCreate()],
+    controller.create,
+  );
 };
 
+// Unauthenticated user routes
 router.post('/login', express.urlencoded({ extended: false }), UsersController.login);
-router.get('/users/me', passport.authenticate('jwt', { session: false, failWithError: true }), UsersController.me);
+router.post('/users/new', UsersController.validateNewCreate(), UsersController.new);
 
+// Authenticated user routes
+router.get('/users/me', passport.authenticate('jwt', { session: false, failWithError: true }), UsersController.me);
 restfulRoutes('users', 'userId', new UsersController());
 
 export default router;

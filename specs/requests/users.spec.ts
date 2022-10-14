@@ -19,6 +19,13 @@ describe('[Request] Users', () => {
 
     this.updateId = user.id;
     this.path = '/users';
+
+    this.createData = JSON.stringify({
+      email: 'foo@bar.com',
+      name: 'Foo',
+      password: 'Bar',
+      provider: 'local',
+    });
   });
 
   describe('index', function () {
@@ -34,6 +41,115 @@ describe('[Request] Users', () => {
 
       it('should return a 200 status', function (done) {
         request.get(this.path).set('Authorization', `Bearer ${admin?.providerId}`).expect(200, done);
+      });
+    });
+  });
+
+  describe('new', function () {
+    describe('with valid data', function () {
+      it('should return a 200 status', function (done) {
+        request
+          .post(`${this.path}/new`)
+          .send({
+            email: 'foo1@gmail.com',
+            password: 'password',
+            name: 'Foo',
+          })
+          .expect(200, done);
+      });
+
+      it('should return the new user', function (done) {
+        request
+          .post(`${this.path}/new`)
+          .send({
+            email: 'foo2@gmail.com',
+            password: 'password',
+            name: 'Foo',
+          })
+          .expect(200)
+          .end((err, res) => {
+            if (err) return done(err);
+            expect(res.body.data.user.id).to.not.be.null;
+            expect(res.body.data.user.email).to.equal('foo2@gmail.com');
+            expect(res.body.data.user.name).to.equal('Foo');
+            expect(res.body.data.user.createdAt).to.not.be.null;
+            expect(res.body.data.user.updatedAt).to.not.be.null;
+            expect(res.body.data.user.providerId).to.not.be.null;
+            return done();
+          });
+      });
+    });
+
+    describe('with invalid data', function () {
+      it('should return a 422 status', function (done) {
+        request
+          .post(`${this.path}/new`)
+          .send({
+            email: 'foo',
+            password: 'password',
+            name: 'Foo',
+          })
+          .expect(422, done);
+      });
+
+      it('should return the error for invalid email', function (done) {
+        request
+          .post(`${this.path}/new`)
+          .send({
+            email: 'foo',
+            password: 'password',
+            name: 'Foo',
+          })
+          .expect(422)
+          .end((err, res) => {
+            if (err) return done(err);
+
+            expect(res.body.status).to.eq('error');
+            const error = res.body.errors[0];
+            expect(error.param).to.eq('email');
+            expect(error.msg).to.equal('Invalid value');
+            return done();
+          });
+      });
+
+      it('should return the error for missing password', function (done) {
+        request
+          .post(`${this.path}/new`)
+          .send({
+            email: 'bar@gmail.com',
+            password: '',
+            name: 'Bar',
+          })
+          .expect(422)
+          .end((err, res) => {
+            if (err) return done(err);
+
+            expect(res.body.status).to.eq('error');
+            const error = res.body.errors[0];
+            expect(error.param).to.eq('password');
+            expect(error.msg).to.equal('Invalid value');
+            return done();
+          });
+      });
+
+      it('should return the error for missing name', function (done) {
+        request
+          .post(`${this.path}/new`)
+          .send({
+            email: 'bar1@gmail.com',
+            password: 'password',
+            name: '',
+          })
+          .expect(422)
+          .end((err, res) => {
+            if (err) return done(err);
+
+            expect(res.body.status).to.eq('error');
+            const error = res.body.errors[0];
+            expect(error.param).to.eq('name');
+            expect(error.msg).to.equal('Invalid value');
+            return done();
+          });
       });
     });
   });
@@ -59,6 +175,6 @@ describe('[Request] Users', () => {
     });
   });
 
-  const actionsToTest = ['show'];
+  const actionsToTest = ['show', 'create'];
   shouldBehaveLikeAnAPI(actionsToTest);
 });
