@@ -30,6 +30,7 @@ const restfulRoutes = (routePrefix: string, idParam: string, controller: BaseCon
 // Unauthenticated user routes
 router.post('/login', express.urlencoded({ extended: false }), UsersController.login);
 router.post('/users/new', UsersController.validateNewCreate(), UsersController.new);
+router.post('/forgot-password', express.json(), UsersController.forgotPassword);
 
 // Authenticated user routes
 router.get('/users/me', passport.authenticate('jwt', { session: false, failWithError: true }), UsersController.me);
