@@ -6,6 +6,7 @@ import tokenUtil from '../utils/token';
 import User from '../models/User';
 import BaseController from './base.controller';
 import { Role } from '../utils/roles';
+import { password as passwordMail } from '../services/mail-service';
 
 export default class UsersController extends BaseController<User> {
   constructor() {
@@ -76,6 +77,19 @@ export default class UsersController extends BaseController<User> {
         });
       });
     })(req, res, next);
+  };
+
+  static forgotPassword = async (req: Request, res: Response) => {
+    const user = await User.findOne({ where: { email: req.body.email } });
+    if (!user) {
+      return res.status(200).send();
+    }
+    const token = tokenUtil(user.email);
+
+    if (process.env.NODE_ENV !== 'test') {
+      await passwordMail(user.email, `Password Reset`, { token });
+    }
+    return res.status(200).send();
   };
 
   static new = async (req: Request, res: Response) => {
