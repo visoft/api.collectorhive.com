@@ -25,7 +25,7 @@
     "@types/express": "^4.17.15",
     "@types/glob": "^8.0.0",
     "@types/helmet": "^4.0.0",
-    "@types/jsonwebtoken": "^9.0.0",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.19",
     "@types/nodemailer": "^6.4.7",
