@@ -72,7 +72,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.6.0",
-    "sequelize-typescript": "^2.1.5",
+    "sequelize-typescript": "^2.1.6",
     "winston": "^3.8.2"
   },
   "repository": {
